@@ -1,0 +1,58 @@
+<div style="text-align:center">
+    <h1 style="margin:20px">
+      Edit Medicine Page
+    </h1>
+</div>
+
+<form #formRef="ngForm" (ngSubmit)="onUpdate(formRef.value)">
+  <div class="form-group">
+      <label for="name">Name</label>
+      <input [(ngModel)]="medicine.name" #nameRef="ngModel" name="name" id="name" type="text" class="form-control" required>
+      <div *ngIf="nameRef.invalid && (nameRef.dirty || nameRef.touched)" class="alert alert-danger">
+          <div>Name is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="manufacture">Manufacture</label>
+      <input [ngModel]="medicine.manufacturer" #mfgRef="ngModel" name="manufacturer" id="manufacturer" type="text" class="form-control" required>
+      <div *ngIf="mfgRef.invalid && (mfgRef.dirty || mfgRef.touched)" class="alert alert-danger">
+        <div>Name is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+      <label for="batchNo">Batch No.</label>
+      <input [ngModel]="medicine.batchNo" #batchRef="ngModel" name="batchNo" id="batchNo" type="text" class="form-control" required>
+      <div *ngIf="batchRef.invalid && (batchRef.dirty || batchRef.touched)" class="alert alert-danger">
+        <div>Name is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+      <label for="expirationDate">Expiration Date</label>
+      <input [ngModel]="medicine.expirationDate" name="expirationDate" id="expirationDate" type="text" class="form-control" required placeholder="MM/dd/yyyy">
+      <div *ngIf="nameRef.invalid && (nameRef.dirty || nameRef.touched)" class="alert alert-danger">
+        <div>Name is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+      <label for="price">Price</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">$</span>
+        </div>
+        <input [ngModel]="medicine.price" #priceRef="ngModel" name="price" id="price" type="text" class="form-control" required>
+      </div>
+      <div *ngIf="priceRef.invalid && (priceRef.dirty || priceRef.touched)" class="alert alert-danger">
+        <div *ngIf="priceRef.errors.required">Price is required</div>
+       <!-- <div *ngIf="priceRef.errors.number">Please enter number</div> -->
+    </div>
+  </div>
+  <div class="form-group">
+      <label for="type">Type</label>
+      <select class="form-control" name="type" [ngModel]="medicine.type">
+        <option *ngFor="let type of types" [value]="type">
+          {{type}}
+        </option>
+      </select>
+  </div>
+  <button type="submit" class="btn btn-info" [disabled]="formRef.invalid">Update Medicine</button>
+</form>
