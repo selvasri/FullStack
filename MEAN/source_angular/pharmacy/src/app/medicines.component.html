@@ -1,0 +1,69 @@
+<div style="text-align:center">
+    <h1 style="margin:20px">
+      Welcome to the {{ title }}!
+    </h1>
+</div>
+<h2>Medicine Details</h2>  
+<div class="card card-body">
+  <p>Select columns from below to hide columns in the table</p>
+  <div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="mfgChk" [checked]="!mfg" (change)="mfg = !mfg">
+          <label class="form-check-label" for="mfgChk">Manufacturer</label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="batchChk" [checked]="!batch" (change)="batch = !batch">
+          <label class="form-check-label" for="batchChk">Batch No.</label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="dateChk" [checked]="!exp" (change)="exp = !exp">
+          <label class="form-check-label" for="dateChk">Expiration Date</label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="priceChk" [checked]="!price" (change)="price = !price">
+          <label class="form-check-label" for="priceChk">Price</label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="typeChk" [checked]="!type" (change)="type = !type">
+          <label class="form-check-label" for="typeChk">Type</label>
+      </div>
+</div> 
+</div>
+<input style="margin-top:20px;" type="text" id="search" [(ngModel)]='searchMedicine'  placeholder="Type Medicine Name to filter Medicines" class="form-control">
+
+<div>
+  <table style="margin-top:20px;" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+          <th style="min-width:80px;">Name</th>
+          <th *ngIf="mfg" style="min-width:80px;">Manufacturer</th>
+          <th *ngIf="batch" style="min-width:80px;">Batch No.</th>
+          <th *ngIf="exp" style="min-width:80px;">Expiration Date</th>
+          <th *ngIf="price" style="min-width:80px;">Price</th>
+          <th *ngIf="type" style="min-width:80px;">Type</th>
+          <th style="width:30px;">Edit</th>
+          <th style="width:30px;">Delete</th>
+          <th style="width:30px;">Delete Multiple</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let medicine of medicines | medicineFilter:searchMedicine'>
+          <td>{{ medicine.name }}</td>
+          <td *ngIf="mfg">{{ medicine.manufacturer }}</td>
+          <td *ngIf="batch">{{ medicine.batchNo }}</td>
+          <td *ngIf="exp">{{ medicine.expirationDate | date: 'MM/dd/yyyy' }}</td>
+          <td *ngIf="price">{{ medicine.price | currency:USD:"true" }}</td>
+          <td *ngIf="type">{{ medicine.type }}</td>
+          <td>
+            <a [routerLink] = "['/editmedicine', medicine._id]" class="btn btn-sm btn-primary">Edit</a>
+          </td>
+          <td>
+            <a (click)="deletemedicine(medicine._id)" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+         <td><input type="checkbox" (change)="onChkChange(medicine)"></td>
+        </tr>
+    </tbody>
+  </table>
+  <button type="button" routerLink="/addmedicine" class="btn btn-primary">Add Medicine</button>
+  <button style="float:right" type="button" class="btn btn-danger" (click)="deleteMultipleMedicines()">Delete Selected Medicines</button>
+</div>
